@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <cmath>
 #include <math.h>
+#include <time.h>
 using namespace std;
 
 bool promptBet();
@@ -39,6 +40,7 @@ bool isSecondHalf(int);
 bool isFirstColumn(int);
 bool isSecondColumn(int);
 bool isThirdColumn(int);
+
 
 
 
@@ -77,13 +79,16 @@ void getBets()
 	{
 		if(bankroll >= 1)
 		{
-			cout<<"You are on bet number "<< index <<endl;
+			cout<<"You are on bet number "<< index <<". You have $"<<bankroll<<" remaining."<<endl;
 			shouldContinueBetting = promptBet(); //get bet type, get bet amount
 
 			if (!shouldContinueBetting)
 			{
 				break;
 			}
+		}
+		else{
+			cout<<"You have no more money to bet with!"<<endl<<endl;
 		}
 	}
 }
@@ -138,8 +143,9 @@ void initializeBankroll()
 
 void spinTheWheel()
 {
-	luckyNumber = static_cast<int>(floor((rand()*.37)));
-	cout<<endl<<"The Winning Number Is: "<<luckyNumber<<"!"<<endl;
+	srand(time(NULL));
+	luckyNumber = static_cast<int>(floor((rand() % 37)));
+	cout<<endl<<"The Winning Number Is: "<<luckyNumber<<"!"<<endl<<endl;
 }
 
 void determineWinnings() 
@@ -390,6 +396,7 @@ void getRetry()
 	char answer;
 	bool validInput = false;
 	while (validInput == false){
+		cout<<"You have $"<<bankroll<<" remaining."<<endl;
 		cout<<"Would you like to continue playing?(Enter Y or N)"<<endl;
 		cin>>answer;
 
@@ -401,7 +408,7 @@ void getRetry()
 			else if(answer == 'n' || answer == 'N'){
 				continueBetting = false;
 				cout<<"Thank you for playing Roulette"<<endl;
-				cout<<"Your net gain (or loss) was: $"<<bankroll - startingBankroll<<endl;
+				cout<<"Your net profit was: $"<<bankroll - startingBankroll<<endl;
 			}
 		}
 
